@@ -165,8 +165,10 @@ go mod tidy
 
 3. **빌드 및 실행**
 ```
-make dev  # PostgreSQL 데이터베이스 실행
+make up  # PostgreSQL 데이터베이스 실행
 make run  # CloudToggle 서버 실행
+make build # 서버 빌드
+make down # PostgreSQL 데이터베이스 다운
 ```
 
 4. **Postman 요청 테스트**
