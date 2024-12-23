@@ -1,0 +1,12 @@
+{
+  "name": "Development Group",
+  "status": "stopped",
+  "resources": [
+    {
+      "type": "EC2",
+      "tags": [
+        { "key": "env", "value": "dev" }
+      ]
+    }
+  ]
+}

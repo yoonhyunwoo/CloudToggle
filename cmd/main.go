@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"github.com/yoonhyunwoo/cloudtoggle/pkg/aws"
 	"github.com/yoonhyunwoo/cloudtoggle/pkg/database"
 	"github.com/yoonhyunwoo/cloudtoggle/pkg/scheduler"
 	"github.com/yoonhyunwoo/cloudtoggle/pkg/server"
@@ -25,7 +26,8 @@ func main() {
 	defer db.Close()
 
 	// 3. 스케줄러 초기화
-	mainScheduler := scheduler.NewScheduler(db)
+	awsClient := aws.NewAWSClient()
+	mainScheduler := scheduler.NewScheduler(db, awsClient)
 	mainScheduler.Start()
 
 	// 4. 서버 실행 (서버는 스케줄러와 데이터베이스를 의존성으로 가짐)

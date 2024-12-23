@@ -31,21 +31,21 @@ func (s *Scheduler) StartGroup(resourceGroupID string) (string, error) {
 				continue
 			}
 
-			instanceIDs, err := manager.GetByTags(s.Context, resource.Tags)
+			resourceIDs, err := manager.GetByTags(s.Context, resource.Tags)
 			if err != nil {
-				log.Printf("[Scheduler] Failed to get instances for resource type %s: %v", resource.Type, err)
+				log.Printf("[Scheduler] Failed to get resources for resource type %s: %v", resource.Type, err)
 				continue
 			}
 
-			if len(instanceIDs) > 0 {
-				err = manager.Start(s.Context, instanceIDs)
+			if len(resourceIDs) > 0 {
+				err = manager.Start(s.Context, resourceIDs)
 				if err != nil {
-					log.Printf("[Scheduler] Failed to start instances for resource type %s: %v", resource.Type, err)
+					log.Printf("[Scheduler] Failed to start resources for resource type %s: %v", resource.Type, err)
 				} else {
-					log.Printf("[Scheduler] Successfully started instances: %v", instanceIDs)
+					log.Printf("[Scheduler] Successfully started resources: %v", resourceIDs)
 				}
 			} else {
-				log.Printf("[Scheduler] No matching instances found for resource type: %s", resource.Type)
+				log.Printf("[Scheduler] No matching resources found for resource type: %s", resource.Type)
 			}
 		}
 	}()
@@ -76,21 +76,21 @@ func (s *Scheduler) StopGroup(resourceGroupID string) (string, error) {
 				continue
 			}
 
-			instanceIDs, err := manager.GetByTags(s.Context, resource.Tags)
+			resourceIDs, err := manager.GetByTags(s.Context, resource.Tags)
 			if err != nil {
-				log.Printf("[Scheduler] Failed to get instances for resource type %s: %v", resource.Type, err)
+				log.Printf("[Scheduler] Failed to get resources for resource type %s: %v", resource.Type, err)
 				continue
 			}
 
-			if len(instanceIDs) > 0 {
-				err = manager.Stop(s.Context, instanceIDs)
+			if len(resourceIDs) > 0 {
+				err = manager.Stop(s.Context, resourceIDs)
 				if err != nil {
-					log.Printf("[Scheduler] Failed to stop instances for resource type %s: %v", resource.Type, err)
+					log.Printf("[Scheduler] Failed to stop resources for resource type %s: %v", resource.Type, err)
 				} else {
-					log.Printf("[Scheduler] Successfully stopped instances: %v", instanceIDs)
+					log.Printf("[Scheduler] Successfully stopped resources: %v", resourceIDs)
 				}
 			} else {
-				log.Printf("[Scheduler] No matching instances found for resource type: %s", resource.Type)
+				log.Printf("[Scheduler] No matching resources found for resource type: %s", resource.Type)
 			}
 		}
 	}()
