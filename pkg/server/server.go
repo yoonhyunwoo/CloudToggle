@@ -1,9 +1,11 @@
 package server
 
 import (
-	"github.com/yoonhyunwoo/cloudtoggle/pkg/scheduler"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/handlers"
+	"github.com/yoonhyunwoo/cloudtoggle/pkg/scheduler"
 
 	"github.com/gorilla/mux"
 	"github.com/yoonhyunwoo/cloudtoggle/internal/auth"
@@ -27,6 +29,12 @@ func StartServer(scheduler *scheduler.Scheduler, db *database.DB) {
 	router.HandleFunc("/api/v1/groups/{group_id}/schedule", auth.Middleware(ScheduleGroupHandler(scheduler, db))).Methods("POST")
 	router.HandleFunc("/api/v1/actions/{action_id}", auth.Middleware(GetActionStatusHandler(db))).Methods("GET")
 
+	corsHandler := handlers.CORS(
+		handlers.AllowedOrigins([]string{"http://localhost:3000"}),                   // 허용할 클라이언트 URL
+		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}), // 허용할 HTTP 메서드
+		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),           // 허용할 헤더
+	)
+
 	log.Println("Server is running on port 8080")
-	http.ListenAndServe(":8080", router)
+	http.ListenAndServe(":8080", corsHandler(router))
 }
