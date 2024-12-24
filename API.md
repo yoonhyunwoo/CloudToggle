@@ -139,6 +139,38 @@ CloudToggle API provides endpoints to manage resource groups, schedule tasks, an
   ```json
   [
       {
+          "id": "1",
+          "name": "Development Group",
+          "status": "stopped"
+      },
+      {
+          "id": "2",
+          "name": "test",
+          "status": "stopped"
+      }
+  ]
+  ```
+- **401 Unauthorized**: Authentication failed.
+
+---
+
+### **Endpoint**
+- **URL**: `/api/v1/groups`
+- **Method**: `GET`
+- **Authentication**: `Bearer <JWT Token>`
+- **Description**: List all resource groups.
+
+### **Request**
+- **Headers**:
+  ```plaintext
+  Authorization: Bearer <JWT Token>
+  ```
+
+### **Response**
+- **200 OK**:
+  ```json
+  [
+      {
           "group_id": "1",
           "name": "Development Group",
           "status": "stopped",

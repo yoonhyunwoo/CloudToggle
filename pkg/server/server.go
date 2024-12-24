@@ -30,7 +30,7 @@ func StartServer(scheduler *scheduler.Scheduler, db *database.DB) {
 	router.HandleFunc("/api/v1/actions/{action_id}", auth.Middleware(GetActionStatusHandler(db))).Methods("GET")
 
 	corsHandler := handlers.CORS(
-		handlers.AllowedOrigins([]string{"http://localhost:3000"}),                   // 허용할 클라이언트 URL
+		handlers.AllowedOrigins([]string{"http://localhost:5173", "*"}),              // 허용할 클라이언트 URL
 		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}), // 허용할 HTTP 메서드
 		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),           // 허용할 헤더
 	)
