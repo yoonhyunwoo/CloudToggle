@@ -109,13 +109,14 @@ func (s *Scheduler) getResourcesForGroup(groupID string) ([]models.AWSResource, 
 }
 
 // getResourceManager는 리소스 유형에 맞는 매니저를 반환합니다.
-// 현재 EC2와 ECS를 지원하며, 추가 리소스 매니저를 확장할 수 있습니다.
 func (s *Scheduler) getResourceManager(resourceType string) aws.AWSResourceManager {
 	switch resourceType {
 	case "EC2":
 		return s.AWSClient.EC2Manager
 	case "ECS":
 		return s.AWSClient.ECSManager
+	case "RDS":
+		return s.AWSClient.RDSManager
 	default:
 		return nil
 	}

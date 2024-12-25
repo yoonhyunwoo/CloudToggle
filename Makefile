@@ -11,6 +11,8 @@ DB_NAME=cloudtoggle
 DB_IMAGE=postgres:latest
 
 WAIT_CMD := $(if $(findstring Windows, $(OS)), timeout /T 10 /NOBREAK, sleep 10)
+WAIT_CMD := $(if $(findstring Windows, $(OS)), mkdocs serve, python3 -m mkdocs serve)
+
 
 # Start development environment
 up:

@@ -3,11 +3,12 @@ package aws
 import (
 	"context"
 	"fmt"
+	"log"
+
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/ecs"
 	"github.com/aws/aws-sdk-go-v2/service/ecs/types"
 	"github.com/yoonhyunwoo/cloudtoggle/pkg/models"
-	"log"
 )
 
 type ECSManager struct {
@@ -129,7 +130,7 @@ func (e *ECSManager) GetByTags(ctx context.Context, resourceTags []models.Resour
 		}
 
 		// Check if the cluster's tags match the provided tags
-		if matchTags(resourceTags, tagOutput.Tags) {
+		if e.matchTags(resourceTags, tagOutput.Tags) {
 			matchingClusters = append(matchingClusters, clusterArn)
 		}
 	}
@@ -162,7 +163,7 @@ func listServices(client *ecs.Client, clusterName string) ([]string, error) {
 }
 
 // Helper function to check if tags match
-func matchTags(resourceTags []models.ResourceTag, awsTags []types.Tag) bool {
+func (e *ECSManager) matchTags(resourceTags []models.ResourceTag, awsTags []types.Tag) bool {
 	tagMap := make(map[string]string)
 	for _, tag := range awsTags {
 		tagMap[*tag.Key] = *tag.Value
